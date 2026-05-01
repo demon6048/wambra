@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WAMBRA Rinconcito | Fusión Amazónica</title>
-    <meta name="description" content="En WAMBRA Rinconcito fusionamos la cocina tradicional amazónica con sabores únicos.">
+    <title>WAMBRA Rinconcito | Menú Interactivo</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -22,885 +21,663 @@
                 extend: {
                     colors: {
                         wambra: {
-                            base: '#2A1810', // Marrón Tierra
-                            dark: '#1A0E08', // Marrón Oscuro
-                            accent: '#E32400', // Rojo Intenso (Fuego) - Mantiene la clase accent para la estructura
-                            cream: '#FDF8F5',// Blanco Crema
-                            gold: '#D4AF37', // Acento dorado andino
-                            card: '#3B2318'  // Fondo de tarjetas
+                            base: '#2A1810', dark: '#1A0E08', accent: '#E32400',
+                            cream: '#FDF8F5', gold: '#D4AF37', card: '#3B2318'
                         }
                     },
-                    fontFamily: {
-                        serif: ['"Playfair Display"', 'serif'],
-                        sans: ['Poppins', 'sans-serif'],
-                    },
-                    boxShadow: {
-                        'glow': '0 0 15px rgba(227, 36, 0, 0.5)',
-                        'glow-lg': '0 0 25px rgba(227, 36, 0, 0.7)',
-                    }
+                    fontFamily: { serif: ['"Playfair Display"', 'serif'], sans: ['Poppins', 'sans-serif'] },
+                    boxShadow: { 'glow': '0 0 15px rgba(227, 36, 0, 0.5)', 'glow-lg': '0 0 25px rgba(227, 36, 0, 0.7)' }
                 }
             }
         }
     </script>
 
     <style>
-        /* Custom Styles & Scrollbar */
-        body {
-            background-color: #2A1810;
-            color: #FDF8F5;
-            overflow-x: hidden;
-        }
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #1A0E08; 
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #E32400; 
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #ff3c14; 
-        }
-
-        /* Andean/Amazonian Pattern Separator */
+        body { background-color: #2A1810; color: #FDF8F5; overflow-x: hidden; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1A0E08; }
+        ::-webkit-scrollbar-thumb { background: #E32400; border-radius: 4px; }
+        
         .pattern-andean {
             height: 12px;
             background-image: url('data:image/svg+xml;utf8,<svg width="40" height="12" xmlns="http://www.w3.org/2000/svg"><path d="M0,12 L0,6 L6,6 L6,0 L14,0 L14,6 L20,6 L20,12 L26,12 L26,6 L32,6 L32,0 L40,0 L40,12 Z" fill="%23D4AF37" opacity="0.3"/></svg>');
             background-repeat: repeat-x;
         }
-
-        /* Hero Overlay Gradient */
-        .hero-gradient {
-            background: linear-gradient(to bottom, rgba(26,14,8,0.4) 0%, rgba(42,24,16,1) 100%);
-        }
-
-        /* Smooth Image Loading */
-        img {
-            transition: opacity 0.3s ease-in-out;
-        }
-
-        /* Toast Animation */
-        @keyframes slideInUp {
-            from { transform: translateY(100%); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        .toast-enter {
-            animation: slideInUp 0.3s forwards;
-        }
-
-        /* Mosaic Gallery */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            grid-auto-rows: 250px;
-            gap: 1rem;
-        }
-        @media (min-width: 768px) {
-            .gallery-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
-            .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
-            .gallery-item:nth-child(4) { grid-column: span 2; }
-        }
+        
+        .hero-gradient { background: linear-gradient(to bottom, rgba(26,14,8,0.4) 0%, rgba(42,24,16,1) 100%); }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-4px) rotate(-4deg); } 50% { transform: translateX(4px) rotate(4deg); } }
+        .cart-shake { animation: shake 0.4s ease-in-out; }
+        @keyframes slideInUp { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .toast-enter { animation: slideInUp 0.3s forwards; }
     </style>
 </head>
 <body class="font-sans antialiased relative">
 
-    <!-- Navbar -->
-    <header id="navbar" class="fixed w-full top-0 z-50 transition-all duration-300 bg-wambra-dark/95 backdrop-blur-md border-b border-wambra-accent/20 py-4">
-        <div class="container mx-auto px-4 md:px-8 flex justify-between items-center">
-            <!-- Logo -->
-            <a href="#" class="flex items-center gap-2 group">
-                <i class="fa-solid fa-fire text-wambra-accent text-2xl group-hover:text-wambra-cream transition-colors shadow-glow rounded-full"></i>
-                <div class="flex flex-col">
-                    <span class="font-serif font-bold text-xl leading-none text-wambra-cream tracking-wider">WAMBRA</span>
-                    <span class="text-[10px] text-wambra-gold tracking-[0.2em] uppercase font-bold">Rinconcito</span>
+    <!-- ========================================== -->
+    <!-- FRONT-END: VISTA DEL CLIENTE PUBLICO       -->
+    <!-- ========================================== -->
+    <div id="clientView">
+        <!-- Navbar -->
+        <header id="navbar" class="fixed w-full top-0 z-50 bg-wambra-dark/95 backdrop-blur-md border-b border-wambra-accent/20 py-4 transition-all">
+            <div class="container mx-auto px-4 md:px-8 flex justify-between items-center">
+                <a href="#" class="flex items-center gap-2">
+                    <i class="fa-solid fa-fire text-wambra-accent text-2xl shadow-glow rounded-full"></i>
+                    <div class="flex flex-col">
+                        <span class="font-serif font-bold text-xl leading-none text-wambra-cream">WAMBRA</span>
+                        <span class="text-[10px] text-wambra-gold tracking-[0.2em] uppercase font-bold">Rinconcito</span>
+                    </div>
+                </a>
+                <div class="flex items-center gap-4">
+                    <button onclick="toggleCart()" class="relative text-wambra-cream hover:text-wambra-accent p-2">
+                        <i class="fa-solid fa-cart-shopping text-xl"></i>
+                        <span id="cart-badge" class="absolute top-0 right-0 bg-wambra-accent text-white text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center shadow-glow hidden">0</span>
+                    </button>
                 </div>
-            </a>
-
-            <!-- Desktop Menu -->
-            <nav class="hidden md:flex gap-6 text-sm font-medium">
-                <a href="#inicio" class="hover:text-wambra-accent transition-colors">Inicio</a>
-                <a href="#nosotros" class="hover:text-wambra-accent transition-colors">Nosotros</a>
-                <a href="#carta" class="hover:text-wambra-accent transition-colors">Carta</a>
-                <a href="#promociones" class="hover:text-wambra-accent transition-colors">Promociones</a>
-                <a href="#galeria" class="hover:text-wambra-accent transition-colors">Galería</a>
-                <a href="#contacto" class="hover:text-wambra-accent transition-colors">Contacto</a>
-            </nav>
-
-            <!-- Cart Trigger & Mobile Menu -->
-            <div class="flex items-center gap-4">
-                <button onclick="toggleCart()" class="relative text-wambra-cream hover:text-wambra-accent transition-colors p-2">
-                    <i class="fa-solid fa-cart-shopping text-xl"></i>
-                    <span id="cart-badge" class="absolute top-0 right-0 bg-wambra-accent text-white text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center shadow-glow hidden">0</span>
-                </button>
-                <button id="mobile-menu-btn" class="md:hidden text-2xl text-wambra-cream focus:outline-none">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
             </div>
-        </div>
+        </header>
 
-        <!-- Mobile Menu Panel -->
-        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-wambra-dark border-b border-wambra-accent/20 py-4 px-6 flex flex-col gap-4 shadow-xl">
-            <a href="#inicio" class="mobile-link text-lg border-b border-wambra-base pb-2">Inicio</a>
-            <a href="#nosotros" class="mobile-link text-lg border-b border-wambra-base pb-2">Nosotros</a>
-            <a href="#carta" class="mobile-link text-lg border-b border-wambra-base pb-2">Carta</a>
-            <a href="#promociones" class="mobile-link text-lg border-b border-wambra-base pb-2">Promociones</a>
-            <a href="#galeria" class="mobile-link text-lg border-b border-wambra-base pb-2">Galería</a>
-            <a href="#contacto" class="mobile-link text-lg">Contacto</a>
-        </div>
-    </header>
+        <!-- Hero Section -->
+        <section id="inicio" class="relative h-[60vh] flex items-center justify-center pt-20">
+            <div class="absolute inset-0 z-0">
+                <img src="https://images.unsplash.com/photo-1512058564366-18510be2db19?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="Fondo" class="w-full h-full object-cover">
+                <div class="absolute inset-0 hero-gradient"></div>
+            </div>
+            <div class="relative z-10 text-center px-4">
+                <h1 class="font-serif text-5xl md:text-7xl font-bold text-wambra-cream mb-2 drop-shadow-lg">WAMBRA</h1>
+                <p class="text-lg text-wambra-gold tracking-[0.2em] uppercase font-bold mb-6">El sabor de la selva</p>
+                <a href="#carta" class="px-8 py-4 bg-wambra-accent text-white font-bold rounded-lg shadow-glow hover:bg-red-700 transition-all">Ver Carta Interactiva</a>
+            </div>
+            <div class="absolute bottom-0 w-full pattern-andean z-10"></div>
+        </section>
 
-    <!-- Hero Section -->
-    <section id="inicio" class="relative h-screen flex items-center justify-center pt-20">
-        <!-- Background Image -->
-        <div class="absolute inset-0 z-0">
-            <!-- Imagen representativa de chaufa amazónico o comida de la selva -->
-            <img src="https://images.unsplash.com/photo-1512058564366-18510be2db19?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="Fondo Comida Amazónica" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/1920x1080/273c33/f2ecdf?text=WAMBRA+Rinconcito'">
-            <div class="absolute inset-0 hero-gradient"></div>
-        </div>
+        <!-- Carta Interactiva -->
+        <section id="carta" class="py-16 bg-wambra-dark min-h-screen">
+            <div class="container mx-auto px-4 md:px-8">
+                <div class="text-center mb-10">
+                    <h2 class="font-serif text-4xl font-bold text-wambra-cream mb-6">Nuestros Platos</h2>
+                    <div class="flex flex-wrap justify-center gap-3" id="categoryFilters"></div>
+                </div>
 
-        <!-- Content -->
-        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto flex flex-col items-center">
-            <i class="fa-solid fa-fire text-5xl md:text-6xl text-wambra-accent mb-4 shadow-glow rounded-full animate-pulse"></i>
-            <h1 class="font-serif text-6xl md:text-8xl font-bold text-wambra-cream mb-2 drop-shadow-lg">
-                WAMBRA
-            </h1>
-            <h2 class="font-sans text-2xl md:text-4xl tracking-[0.3em] text-wambra-accent mb-6 uppercase font-bold drop-shadow-md">
-                Rinconcito
-            </h2>
-            <p class="text-lg md:text-2xl text-wambra-cream/90 mb-10 font-light italic max-w-2xl">
-                "El verdadero sabor de la selva y la fusión en un solo lugar"
+                <div id="menuGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <div class="col-span-full text-center py-12 text-wambra-accent animate-pulse" id="loader">
+                        <i class="fa-solid fa-fire fa-spin text-4xl mb-4 shadow-glow rounded-full"></i>
+                        <p class="font-bold text-lg text-wambra-cream">Conectando con Google Sheets... cargando menú.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-[#1A0E08] pt-8 pb-6 border-t-2 border-wambra-accent/50 relative text-center">
+            <p class="text-wambra-cream/30 text-xs flex items-center justify-center gap-2">
+                &copy; 2026 WAMBRA Rinconcito. Software conectado a Google Sheets.
+                <!-- BOTÓN OCULTO DEL DASHBOARD -->
+                <button onclick="openDashboardLogin()" class="text-wambra-cream/10 hover:text-wambra-gold transition-colors ml-2" title="Área Administrativa">
+                    <i class="fa-solid fa-chart-simple"></i>
+                </button>
             </p>
-            
-            <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-                <a href="#carta" class="px-8 py-4 bg-wambra-accent text-white font-bold rounded-lg shadow-glow hover:bg-orange-600 hover:shadow-glow-lg transition-all duration-300 transform hover:-translate-y-1">
-                    <i class="fa-solid fa-utensils mr-2"></i> Ver Carta
-                </a>
-                <a href="#contacto" class="px-8 py-4 bg-green-600 text-white font-bold rounded-lg shadow-[0_0_15px_rgba(22,163,74,0.4)] hover:bg-green-700 transition-all duration-300">
-                    <i class="fa-brands fa-whatsapp mr-2"></i> Pedir por WhatsApp
-                </a>
-            </div>
-        </div>
-        
-        <!-- Bottom decorative element -->
-        <div class="absolute bottom-0 w-full pattern-andean z-10"></div>
-    </section>
+        </footer>
 
-    <!-- Sobre Nosotros -->
-    <section id="nosotros" class="py-20 bg-wambra-base">
-        <div class="container mx-auto px-4 md:px-8">
-            <div class="flex flex-col md:flex-row items-center gap-12">
-                <div class="md:w-1/2 relative">
-                    <div class="absolute -inset-4 border-2 border-wambra-accent/30 rounded-xl transform translate-x-4 translate-y-4"></div>
-                    <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Cocina Wambra" class="relative z-10 rounded-xl shadow-2xl w-full object-cover h-[400px]">
+        <!-- Sidebar Carrito -->
+        <div id="cartSidebar" class="fixed top-0 right-0 h-full w-full md:w-96 bg-wambra-dark shadow-2xl z-[60] transform translate-x-full transition-transform duration-300 flex flex-col border-l border-wambra-accent/30">
+            <div class="p-5 border-b border-wambra-card flex justify-between items-center bg-wambra-base">
+                <h3 class="font-serif text-xl font-bold text-wambra-cream"><i class="fa-solid fa-receipt text-wambra-accent"></i> Tu Pedido</h3>
+                <button onclick="toggleCart()" class="text-wambra-cream/50 hover:text-wambra-accent text-2xl"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="cartItems" class="flex-1 overflow-y-auto p-4 space-y-4"></div>
+            <div class="p-5 bg-wambra-base border-t border-wambra-card space-y-3">
+                <div class="flex justify-between items-center py-2 border-t border-wambra-card/50 mt-2">
+                    <span class="font-bold text-lg">TOTAL:</span>
+                    <span id="cartTotal" class="font-bold text-xl text-wambra-accent">S/ 0.00</span>
                 </div>
-                <div class="md:w-1/2 space-y-6 text-center md:text-left">
-                    <div class="flex items-center justify-center md:justify-start gap-3 mb-2">
-                        <span class="h-[2px] w-12 bg-wambra-accent"></span>
-                        <h3 class="text-wambra-gold font-bold uppercase tracking-widest text-sm">Nuestra Esencia</h3>
-                    </div>
-                    <h2 class="font-serif text-4xl md:text-5xl font-bold text-wambra-cream">Identidad & Sabor Amazónico</h2>
-                    <p class="text-lg text-wambra-cream/80 leading-relaxed font-light">
-                        "En <span class="text-wambra-accent font-semibold">WAMBRA Rinconcito</span> te traemos los sabores más auténticos de la selva peruana fusionados con lo mejor de la cocina urbana y tradicional."
-                    </p>
-                    <p class="text-wambra-cream/60">
-                        Desde nuestros jugosos Juanes y Tacachos con Cecina, hasta nuestros potentes Chaufas Amazónicos y variedad de Alitas. Cada plato está preparado para hacerte vivir una experiencia inolvidable.
-                    </p>
+                <!-- Formulario de Envío -->
+                <div id="checkoutForm" class="hidden flex flex-col gap-3 mt-2 border-t border-wambra-card/50 pt-4">
+                    <input type="text" id="clienteNombre" placeholder="Tu Nombre y Apellido" class="w-full bg-wambra-dark border border-wambra-card rounded py-2 px-3 text-sm text-white focus:border-wambra-accent focus:outline-none">
+                    <select id="tipoEntrega" onchange="document.getElementById('clienteDireccion').classList.toggle('hidden', this.value === 'recojo')" class="w-full bg-wambra-dark border border-wambra-card rounded py-2 px-3 text-sm text-white focus:border-wambra-accent focus:outline-none">
+                        <option value="delivery">Envío por Delivery</option>
+                        <option value="recojo">Recojo en Local</option>
+                    </select>
+                    <input type="text" id="clienteDireccion" placeholder="Tu Dirección exacta" class="w-full bg-wambra-dark border border-wambra-card rounded py-2 px-3 text-sm text-white focus:border-wambra-accent focus:outline-none">
+                </div>
+                <!-- Botones -->
+                <div class="flex gap-2 pt-2">
+                    <button onclick="clearCart()" class="px-4 py-3 bg-wambra-dark border border-wambra-card rounded hover:bg-wambra-accent text-white"><i class="fa-solid fa-trash"></i></button>
+                    <button onclick="showCheckout()" id="btnContinuar" class="flex-1 bg-wambra-accent hover:bg-red-700 text-white font-bold py-3 rounded shadow-glow">Continuar Pedido</button>
+                    <button onclick="sendOrderWhatsApp()" id="btnEnviarWhatsApp" class="hidden flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded shadow-glow"><i class="fa-brands fa-whatsapp"></i> Enviar al Local</button>
                 </div>
             </div>
         </div>
-    </section>
+        <div id="cartOverlay" onclick="toggleCart()" class="fixed inset-0 bg-black/70 z-[55] hidden backdrop-blur-sm"></div>
 
-    <!-- Platos Destacados -->
-    <section class="py-16 bg-wambra-dark border-t border-b border-wambra-card relative">
-        <div class="container mx-auto px-4 md:px-8">
-            <div class="text-center mb-12">
-                <h2 class="font-serif text-3xl md:text-4xl font-bold text-wambra-cream flex items-center justify-center gap-3">
-                    <i class="fa-solid fa-star text-wambra-accent shadow-glow rounded-full"></i>
-                    Los favoritos de WAMBRA
-                    <i class="fa-solid fa-star text-wambra-accent shadow-glow rounded-full"></i>
-                </h2>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Highlight Card 1 -->
-                <div class="bg-wambra-base rounded-2xl overflow-hidden shadow-2xl border border-wambra-accent/20 group hover:border-wambra-accent/60 transition-all duration-300">
-                    <div class="h-64 overflow-hidden relative">
-                        <!-- Placeholder chaufa amazonico -->
-                        <img src="https://images.unsplash.com/photo-1512058564366-18510be2db19?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Chaufa Especial Amazónico" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                        <div class="absolute top-4 right-4 bg-wambra-accent text-white text-xs font-bold px-3 py-1 rounded-full shadow-glow">Más Pedido</div>
-                    </div>
-                    <div class="p-6 text-center">
-                        <h3 class="font-serif text-2xl font-bold mb-2">Chaufa Especial Amazónico</h3>
-                        <p class="text-wambra-cream/70 text-sm mb-4">El rey de la casa. Chaufa regional al wok con cecina, chorizo regional y maduros fritos.</p>
-                        <p class="text-wambra-accent font-bold text-xl">S/ 20.00</p>
-                    </div>
-                </div>
-                <!-- Highlight Card 2 -->
-                <div class="bg-wambra-base rounded-2xl overflow-hidden shadow-2xl border border-wambra-accent/20 group hover:border-wambra-accent/60 transition-all duration-300 relative transform md:-translate-y-4">
-                    <div class="absolute inset-0 shadow-glow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-2xl"></div>
-                    <div class="h-64 overflow-hidden relative">
-                        <!-- Placeholder juane -->
-                        <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Juane, Tacacho y Cecina" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                    </div>
-                    <div class="p-6 text-center">
-                        <h3 class="font-serif text-2xl font-bold mb-2">Juane, Tacacho y Cecina</h3>
-                        <p class="text-wambra-cream/70 text-sm mb-4">La trinidad amazónica en un solo plato. Sabor tradicional envuelto en hoja de bijao.</p>
-                        <p class="text-wambra-accent font-bold text-xl">S/ 16.00</p>
-                    </div>
-                </div>
-                <!-- Highlight Card 3 -->
-                <div class="bg-wambra-base rounded-2xl overflow-hidden shadow-2xl border border-wambra-accent/20 group hover:border-wambra-accent/60 transition-all duration-300">
-                    <div class="h-64 overflow-hidden relative">
-                        <!-- Placeholder alitas -->
-                        <img src="https://images.unsplash.com/photo-1527477396000-e27163b481c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Alitas Acevichadas" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                    </div>
-                    <div class="p-6 text-center">
-                        <h3 class="font-serif text-2xl font-bold mb-2">Piqueo Amazónico</h3>
-                        <p class="text-wambra-cream/70 text-sm mb-4">Para compartir lo mejor de nuestra carta con amigos o en familia. ¡Full sabor!</p>
-                        <p class="text-wambra-accent font-bold text-xl">S/ 30.00</p>
-                    </div>
-                </div>
-            </div>
+        <!-- Botón Flotante Carrito Móvil -->
+        <button onclick="toggleCart()" class="md:hidden fixed bottom-6 right-6 w-14 h-14 bg-wambra-accent text-white rounded-full shadow-glow-lg flex items-center justify-center text-2xl z-40 hover:bg-red-700">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span id="floating-badge" class="absolute -top-1 -right-1 bg-white text-wambra-accent text-xs font-bold h-5 w-5 rounded-full flex items-center justify-center shadow hidden">0</span>
+        </button>
+    </div> <!-- FIN FRONT-END -->
+
+
+    <!-- ========================================== -->
+    <!-- BACK-END: DASHBOARD FINANCIERO OCULTO      -->
+    <!-- ========================================== -->
+    
+    <!-- Modal Login Dashboard -->
+    <div id="dashLoginModal" class="hidden fixed inset-0 bg-black/90 z-[200] flex justify-center items-center backdrop-blur-md">
+        <div class="bg-wambra-base p-8 rounded-2xl shadow-2xl border border-wambra-card w-full max-w-sm text-center">
+            <i class="fa-solid fa-chart-pie text-4xl text-wambra-accent mb-4"></i>
+            <h2 class="font-serif text-2xl font-bold mb-2">Panel Administrativo</h2>
+            <p class="text-sm text-wambra-cream/60 mb-6">Ingresa tu PIN para ver las ventas</p>
+            <input type="password" id="adminPin" placeholder="PIN (1234)" class="w-full bg-wambra-dark border border-wambra-card rounded py-3 px-4 text-center text-xl mb-4 text-white focus:outline-none focus:border-wambra-accent" onkeyup="if(event.key === 'Enter') tryLoginDashboard()">
+            <button onclick="tryLoginDashboard()" class="w-full bg-wambra-accent hover:bg-red-700 text-white font-bold py-3 rounded mb-4 shadow-glow">Acceder</button>
+            <button onclick="closeDashboardLogin()" class="text-wambra-cream/50 text-sm hover:text-white">Volver a la tienda</button>
         </div>
-    </section>
+    </div>
 
-    <!-- Carta Interactiva -->
-    <section id="carta" class="py-20 bg-wambra-base">
-        <div class="container mx-auto px-4 md:px-8">
-            <div class="text-center mb-10">
-                <span class="text-wambra-accent font-bold tracking-widest text-sm uppercase">Nuestra Oferta</span>
-                <h2 class="font-serif text-4xl md:text-5xl font-bold text-wambra-cream mt-2 mb-8">Carta Menú</h2>
-                
-                <!-- Buscador -->
-                <div class="max-w-md mx-auto relative mb-8">
-                    <input type="text" id="searchInput" placeholder="Buscar plato..." class="w-full bg-wambra-dark border border-wambra-card rounded-full py-3 px-6 pl-12 text-wambra-cream focus:outline-none focus:border-wambra-accent transition-colors">
-                    <i class="fa-solid fa-search absolute left-5 top-1/2 transform -translate-y-1/2 text-wambra-cream/50"></i>
-                </div>
-
-                <!-- Filtros Categorías -->
-                <div class="flex flex-wrap justify-center gap-3" id="categoryFilters">
-                    <button class="filter-btn active px-5 py-2 rounded-full border border-wambra-accent bg-wambra-accent text-white font-medium transition-all" data-filter="all">Todos</button>
-                    <button class="filter-btn px-5 py-2 rounded-full border border-wambra-card hover:border-wambra-accent hover:text-wambra-accent transition-all text-wambra-cream/80 bg-wambra-dark" data-filter="Especiales">Especiales</button>
-                    <button class="filter-btn px-5 py-2 rounded-full border border-wambra-card hover:border-wambra-accent hover:text-wambra-accent transition-all text-wambra-cream/80 bg-wambra-dark" data-filter="Saladitos">Saladitos & Broaster</button>
-                    <button class="filter-btn px-5 py-2 rounded-full border border-wambra-card hover:border-wambra-accent hover:text-wambra-accent transition-all text-wambra-cream/80 bg-wambra-dark" data-filter="Chaufas y Salchipapas">Chaufas y Salchipapas</button>
-                    <button class="filter-btn px-5 py-2 rounded-full border border-wambra-card hover:border-wambra-accent hover:text-wambra-accent transition-all text-wambra-cream/80 bg-wambra-dark" data-filter="Alitas">Alitas</button>
-                </div>
+    <!-- Modal para Nueva Venta Manual -->
+    <div id="manualSaleModal" class="hidden fixed inset-0 bg-black/90 z-[250] flex justify-center items-center backdrop-blur-md">
+        <div class="bg-wambra-base p-8 rounded-2xl shadow-2xl border border-wambra-card w-full max-w-sm">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="font-serif text-2xl font-bold text-wambra-cream">Registrar Venta</h2>
+                <button onclick="closeManualSaleModal()" class="text-wambra-cream/50 hover:text-wambra-accent text-xl"><i class="fa-solid fa-xmark"></i></button>
             </div>
-
-            <!-- Contenedor de Productos (Inyectados por JS) -->
-            <div id="menuGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                <!-- Productos se renderizan aquí -->
-            </div>
-            
-            <div id="noResults" class="hidden text-center py-10">
-                <i class="fa-solid fa-plate-wheat text-4xl text-wambra-cream/30 mb-4"></i>
-                <p class="text-xl text-wambra-cream/60">No encontramos platos con esa descripción.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Promociones / Combos -->
-    <section id="promociones" class="py-20 bg-wambra-dark relative overflow-hidden">
-        <div class="absolute inset-0 pattern-andean opacity-10"></div>
-        <div class="container mx-auto px-4 md:px-8 relative z-10">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-wambra-card pb-4">
+            <div class="space-y-4">
                 <div>
-                    <h2 class="font-serif text-4xl font-bold text-wambra-cream">Súper Combos</h2>
-                    <p class="text-wambra-gold mt-2">Perfectos para compartir en familia o con amigos</p>
+                    <label class="block text-xs text-wambra-gold uppercase mb-1">Cliente / Mesa (Opcional)</label>
+                    <input type="text" id="manualCliente" placeholder="Ej: Mesa 4 / Carlos" class="w-full bg-wambra-dark border border-wambra-card rounded py-2 px-3 text-white focus:outline-none focus:border-wambra-accent">
                 </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-                <!-- Promo 1 -->
-                <div class="bg-wambra-base rounded-xl overflow-hidden shadow-lg border border-wambra-accent/30 group relative flex flex-col md:flex-row">
-                    <div class="absolute top-0 right-0 bg-wambra-accent text-white text-xs font-bold px-3 py-1 rounded-bl-xl z-20">Recomendado</div>
-                    <img src="https://images.unsplash.com/photo-1544025162-831eb09ebce1?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Piqueo Amazónico" class="w-full md:w-2/5 h-48 md:h-auto object-cover group-hover:scale-105 transition-transform duration-500">
-                    <div class="p-6 flex-1 flex flex-col justify-center">
-                        <h3 class="font-bold text-2xl mb-2 text-wambra-cream">Piqueo Amazónico</h3>
-                        <p class="text-sm text-wambra-cream/70 mb-4">La degustación perfecta de nuestra selva para compartir y probar de todo un poco.</p>
-                        <div class="flex justify-between items-center mt-auto">
-                            <span class="text-wambra-accent font-bold text-2xl">S/ 30.00</span>
-                            <button onclick="addToCartByData('Piqueo Amazónico', 30.00, 'Especiales')" class="bg-wambra-card hover:bg-wambra-accent border border-wambra-accent/50 text-white px-4 py-2 rounded transition-colors text-sm font-bold shadow-glow">
-                                Pedir
-                            </button>
-                        </div>
-                    </div>
+                <div>
+                    <label class="block text-xs text-wambra-gold uppercase mb-1">Tipo de Venta</label>
+                    <select id="manualTipo" class="w-full bg-wambra-dark border border-wambra-card rounded py-2 px-3 text-white focus:outline-none focus:border-wambra-accent">
+                        <option value="en local">En Local / Mesa</option>
+                        <option value="delivery">Delivery Directo</option>
+                        <option value="recojo">Recojo Directo</option>
+                    </select>
                 </div>
-                
-                <!-- Promo 2 -->
-                <div class="bg-wambra-base rounded-xl overflow-hidden shadow-lg border border-wambra-accent/30 group relative flex flex-col md:flex-row">
-                    <div class="absolute top-0 right-0 bg-wambra-accent text-white text-xs font-bold px-3 py-1 rounded-bl-xl z-20">Nuevo</div>
-                    <img src="https://images.unsplash.com/photo-1604908177453-7462950a6a3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Canastas de Plátano" class="w-full md:w-2/5 h-48 md:h-auto object-cover group-hover:scale-105 transition-transform duration-500">
-                    <div class="p-6 flex-1 flex flex-col justify-center">
-                        <h3 class="font-bold text-2xl mb-2 text-wambra-cream">Canastas de Plátano</h3>
-                        <p class="text-sm text-wambra-cream/70 mb-4">6 canastas rellenas de chorizo con papas andinas y 5 alitas (BBQ, Picante o Acevichada).</p>
-                        <div class="flex justify-between items-center mt-auto">
-                            <span class="text-wambra-accent font-bold text-2xl">S/ 25.00</span>
-                            <button onclick="addToCartByData('Canastas de Plátano Amazónicas', 25.00, 'Especiales')" class="bg-wambra-card hover:bg-wambra-accent border border-wambra-accent/50 text-white px-4 py-2 rounded transition-colors text-sm font-bold shadow-glow">
-                                Pedir
-                            </button>
-                        </div>
-                    </div>
+                <div>
+                    <label class="block text-xs text-wambra-gold uppercase mb-1">Monto Total Pagado</label>
+                    <input type="number" id="manualTotal" placeholder="S/ 0.00" step="0.10" class="w-full bg-wambra-dark border border-wambra-accent rounded py-3 px-3 text-white text-2xl font-bold text-center focus:outline-none focus:ring-2 focus:ring-wambra-accent shadow-glow">
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Galería (Mosaico) -->
-    <section id="galeria" class="py-20 bg-wambra-base">
-        <div class="container mx-auto px-4 md:px-8">
-            <h2 class="font-serif text-4xl font-bold text-center text-wambra-cream mb-12">Nuestra Experiencia</h2>
-            <div class="gallery-grid">
-                <div class="gallery-item overflow-hidden rounded-xl group relative">
-                    <img src="https://images.unsplash.com/photo-1541544741938-0af808871cc0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Ambiente">
-                    <div class="absolute inset-0 bg-gradient-to-t from-wambra-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                        <span class="font-bold text-xl">Ambiente Acogedor</span>
-                    </div>
+                <div class="flex gap-2 pt-2">
+                    <button onclick="closeManualSaleModal()" class="flex-1 bg-wambra-dark border border-wambra-card text-white py-3 rounded hover:bg-wambra-card transition-colors">Cancelar</button>
+                    <button onclick="saveManualSale()" class="flex-1 bg-green-600 text-white py-3 rounded hover:bg-green-700 font-bold shadow-glow transition-all">Guardar Venta</button>
                 </div>
-                <div class="gallery-item overflow-hidden rounded-xl group relative">
-                    <img src="https://images.unsplash.com/photo-1512058564366-18510be2db19?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Plato Especial">
-                </div>
-                <div class="gallery-item overflow-hidden rounded-xl group relative">
-                    <img src="https://images.unsplash.com/photo-1569058242253-1df34b0849af?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Broaster">
-                </div>
-                <div class="gallery-item overflow-hidden rounded-xl group relative">
-                    <img src="https://images.unsplash.com/photo-1527477396000-e27163b481c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Alitas">
-                    <div class="absolute inset-0 bg-gradient-to-t from-wambra-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                        <span class="font-bold text-xl">Las Mejores Alitas</span>
-                    </div>
-                </div>
-                <div class="gallery-item overflow-hidden rounded-xl group relative">
-                    <img src="https://images.unsplash.com/photo-1633436374961-09b92742047b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Salchipapas">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contacto -->
-    <section id="contacto" class="py-20 bg-wambra-dark relative">
-        <div class="absolute top-0 w-full pattern-andean"></div>
-        <div class="container mx-auto px-4 md:px-8 mt-8">
-            <div class="flex flex-col md:flex-row gap-10 bg-wambra-base p-8 md:p-12 rounded-2xl shadow-2xl border border-wambra-card">
-                
-                <!-- Info -->
-                <div class="md:w-1/2 space-y-8">
-                    <div>
-                        <h2 class="font-serif text-4xl font-bold text-wambra-cream mb-2">Visítanos</h2>
-                        <p class="text-wambra-cream/60">Haz tu pedido para recojo o ven a disfrutar con nosotros.</p>
-                    </div>
-
-                    <div class="space-y-4">
-                        <div class="flex items-start gap-4">
-                            <div class="w-12 h-12 bg-wambra-card rounded-full flex items-center justify-center text-wambra-accent shrink-0 shadow-glow">
-                                <i class="fa-solid fa-location-dot"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-lg">Dirección</h4>
-                                <p class="text-wambra-cream/70">Av. Principal 1234, Huánuco, Perú.</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-4">
-                            <div class="w-12 h-12 bg-wambra-card rounded-full flex items-center justify-center text-wambra-accent shrink-0 shadow-glow">
-                                <i class="fa-solid fa-clock"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-lg">Horario de Atención</h4>
-                                <p class="text-wambra-cream/70">Lunes a Domingo<br>12:00 PM - 11:00 PM</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-4">
-                            <div class="w-12 h-12 bg-wambra-card rounded-full flex items-center justify-center text-wambra-accent shrink-0 shadow-glow">
-                                <i class="fa-solid fa-phone"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-lg">Contacto & Delivery</h4>
-                                <p class="text-wambra-cream/70">+51 999 999 999</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flex gap-4 pt-4">
-                        <a href="https://wa.me/51999999999" target="_blank" class="flex-1 text-center py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition-colors">
-                            <i class="fa-brands fa-whatsapp mr-2"></i> WhatsApp
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Mapa Placeholder -->
-                <div class="md:w-1/2 h-64 md:h-auto min-h-[300px] bg-wambra-card rounded-xl overflow-hidden relative border border-wambra-base">
-                    <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Mapa Ubicación" class="w-full h-full object-cover opacity-50">
-                    <div class="absolute inset-0 flex flex-col items-center justify-center bg-wambra-dark/60">
-                        <i class="fa-solid fa-map-location-dot text-4xl text-wambra-accent mb-3"></i>
-                        <button class="px-6 py-2 bg-wambra-accent text-white font-bold rounded shadow-glow hover:bg-orange-600 transition">
-                            Cómo Llegar (Google Maps)
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-[#1A0E08] pt-12 pb-6 border-t-2 border-wambra-accent/50 relative">
-        <div class="container mx-auto px-4 md:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="flex flex-col items-center md:items-start">
-                <a href="#" class="flex items-center gap-2 mb-2">
-                    <i class="fa-solid fa-fire text-wambra-accent text-xl"></i>
-                    <span class="font-serif font-bold text-2xl text-wambra-cream tracking-wider">WAMBRA</span>
-                </a>
-                <p class="text-wambra-gold text-sm italic">"Tradición y fusión en cada plato"</p>
-            </div>
-            
-            <div class="flex gap-4 text-xl">
-                <a href="#" class="w-10 h-10 rounded-full bg-wambra-card flex items-center justify-center text-wambra-cream hover:text-wambra-accent hover:bg-wambra-base transition-all"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="#" class="w-10 h-10 rounded-full bg-wambra-card flex items-center justify-center text-wambra-cream hover:text-wambra-accent hover:bg-wambra-base transition-all"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#" class="w-10 h-10 rounded-full bg-wambra-card flex items-center justify-center text-wambra-cream hover:text-wambra-accent hover:bg-wambra-base transition-all"><i class="fa-brands fa-tiktok"></i></a>
-            </div>
-        </div>
-        <div class="text-center text-wambra-cream/30 text-xs mt-8 border-t border-wambra-card/50 pt-6">
-            &copy; 2026 WAMBRA Rinconcito. Todos los derechos reservados. Diseñado para ofrecer la mejor experiencia gastronómica.
-        </div>
-    </footer>
-
-    <!-- Botón Flotante Carrito (Móvil) -->
-    <button onclick="toggleCart()" class="md:hidden fixed bottom-6 right-6 w-14 h-14 bg-wambra-accent text-white rounded-full shadow-glow-lg flex items-center justify-center text-2xl z-40 hover:bg-orange-600 transition-transform transform hover:scale-110">
-        <i class="fa-solid fa-cart-shopping"></i>
-        <span id="floating-badge" class="absolute -top-1 -right-1 bg-white text-wambra-accent text-xs font-bold h-5 w-5 rounded-full flex items-center justify-center shadow hidden">0</span>
-    </button>
-
-    <!-- Sidebar Carrito (Calculadora de Cuenta) -->
-    <div id="cartSidebar" class="fixed top-0 right-0 h-full w-full md:w-96 bg-wambra-dark shadow-2xl z-[60] transform translate-x-full transition-transform duration-300 flex flex-col border-l border-wambra-accent/30">
-        <!-- Header -->
-        <div class="p-5 border-b border-wambra-card flex justify-between items-center bg-wambra-base">
-            <h3 class="font-serif text-xl font-bold text-wambra-cream flex items-center gap-2">
-                <i class="fa-solid fa-receipt text-wambra-accent"></i> Tu Pedido
-            </h3>
-            <button onclick="toggleCart()" class="text-wambra-cream/50 hover:text-wambra-accent text-2xl transition-colors">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-        </div>
-
-        <!-- Items Container -->
-        <div id="cartItems" class="flex-1 overflow-y-auto p-4 space-y-4">
-            <!-- Renderizado dinámico -->
-            <div class="flex flex-col items-center justify-center h-full text-wambra-cream/30">
-                <i class="fa-solid fa-basket-shopping text-5xl mb-3"></i>
-                <p>Tu canasta está vacía</p>
-            </div>
-        </div>
-
-        <!-- Calculadora Footer -->
-        <div class="p-5 bg-wambra-base border-t border-wambra-card space-y-3">
-            <div class="flex justify-between text-sm text-wambra-cream/70">
-                <span>Subtotal:</span>
-                <span id="cartSubtotal">S/ 0.00</span>
-            </div>
-            
-            <!-- Opciones extra -->
-            <div class="flex gap-2">
-                <div class="flex-1 bg-wambra-dark rounded p-2 border border-wambra-card">
-                    <label class="text-[10px] text-wambra-cream/50 uppercase block mb-1">Descuento (S/)</label>
-                    <input type="number" id="inputDescuento" value="0" min="0" onchange="updateTotals()" class="w-full bg-transparent text-sm text-wambra-cream focus:outline-none">
-                </div>
-                <div class="flex-1 bg-wambra-dark rounded p-2 border border-wambra-card">
-                    <label class="text-[10px] text-wambra-cream/50 uppercase block mb-1">Propina (S/)</label>
-                    <input type="number" id="inputPropina" value="0" min="0" onchange="updateTotals()" class="w-full bg-transparent text-sm text-wambra-cream focus:outline-none">
-                </div>
-            </div>
-
-            <div class="flex justify-between items-center py-2 border-t border-wambra-card/50 mt-2">
-                <span class="font-bold text-lg">TOTAL FINAL:</span>
-                <span id="cartTotal" class="font-bold text-xl text-wambra-accent">S/ 0.00</span>
-            </div>
-
-            <div class="flex gap-2 pt-2">
-                <button onclick="clearCart()" class="px-4 py-3 bg-wambra-dark border border-wambra-card rounded text-wambra-cream/70 hover:text-white hover:bg-wambra-accent transition-colors" title="Limpiar todo">
-                    <i class="fa-solid fa-trash"></i>
-                </button>
-                <button onclick="sendOrderWhatsApp()" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded shadow-[0_0_15px_rgba(22,163,74,0.3)] transition-all flex justify-center items-center gap-2">
-                    <i class="fa-brands fa-whatsapp text-xl"></i> Enviar Pedido
-                </button>
             </div>
         </div>
     </div>
-    
-    <!-- Overlay Carrito -->
-    <div id="cartOverlay" onclick="toggleCart()" class="fixed inset-0 bg-black/70 z-[55] hidden backdrop-blur-sm transition-opacity"></div>
 
-    <!-- Toast Notification Container -->
-    <div id="toastContainer" class="fixed bottom-24 md:bottom-10 left-1/2 transform -translate-x-1/2 z-[70] flex flex-col gap-2"></div>
+    <!-- Panel de Ventas -->
+    <div id="dashboardView" class="hidden bg-[#110905] min-h-screen z-[150] fixed inset-0 overflow-y-auto pb-10">
+        <!-- Admin Navbar -->
+        <div class="bg-wambra-base border-b border-wambra-card p-4 flex justify-between items-center sticky top-0 z-10 shadow-lg flex-wrap gap-4">
+            <div class="flex items-center gap-3">
+                <i class="fa-solid fa-fire text-wambra-accent text-2xl"></i>
+                <h1 class="font-serif font-bold text-xl">Wambra Analytics</h1>
+            </div>
+            <div class="flex gap-3">
+                <button onclick="openManualSaleModal()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-sm flex items-center gap-2 font-bold shadow-glow transition-all">
+                    <i class="fa-solid fa-plus"></i> Nueva Venta en Local
+                </button>
+                <button onclick="logoutDashboard()" class="bg-wambra-dark hover:bg-wambra-card border border-wambra-accent/50 text-white px-4 py-2 rounded text-sm flex items-center gap-2 transition-colors">
+                    <i class="fa-solid fa-right-from-bracket"></i> Cerrar Panel
+                </button>
+            </div>
+        </div>
 
-    <!-- JavaScript Base de Datos y Lógica -->
+        <div class="container mx-auto p-4 md:p-8">
+            <h2 class="text-2xl font-bold mb-6 text-wambra-cream">Resumen de Ventas</h2>
+            
+            <!-- Tarjetas de Estadísticas -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <!-- Hoy -->
+                <div class="bg-wambra-base p-5 rounded-xl border border-wambra-card shadow-lg relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 opacity-5 text-7xl"><i class="fa-solid fa-calendar-day"></i></div>
+                    <p class="text-wambra-cream/60 text-sm font-medium uppercase tracking-wider mb-1">Hoy</p>
+                    <h3 class="text-3xl font-bold text-wambra-accent" id="statHoy">S/ 0.00</h3>
+                    <p class="text-xs text-green-400 mt-2" id="statHoyCount">0 pedidos</p>
+                </div>
+                <!-- Ayer -->
+                <div class="bg-wambra-base p-5 rounded-xl border border-wambra-card shadow-lg relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 opacity-5 text-7xl"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                    <p class="text-wambra-cream/60 text-sm font-medium uppercase tracking-wider mb-1">Ayer</p>
+                    <h3 class="text-3xl font-bold text-wambra-gold" id="statAyer">S/ 0.00</h3>
+                    <p class="text-xs text-wambra-cream/40 mt-2" id="statAyerCount">0 pedidos</p>
+                </div>
+                <!-- Mes Actual -->
+                <div class="bg-wambra-base p-5 rounded-xl border border-wambra-card shadow-lg relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 opacity-5 text-7xl"><i class="fa-solid fa-calendar-days"></i></div>
+                    <p class="text-wambra-cream/60 text-sm font-medium uppercase tracking-wider mb-1">Este Mes</p>
+                    <h3 class="text-3xl font-bold text-wambra-cream" id="statMes">S/ 0.00</h3>
+                    <p class="text-xs text-wambra-cream/40 mt-2" id="statMesCount">0 pedidos</p>
+                </div>
+                <!-- Mes Pasado -->
+                <div class="bg-wambra-base p-5 rounded-xl border border-wambra-card shadow-lg relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 opacity-5 text-7xl"><i class="fa-solid fa-chart-line"></i></div>
+                    <p class="text-wambra-cream/60 text-sm font-medium uppercase tracking-wider mb-1">Mes Pasado</p>
+                    <h3 class="text-3xl font-bold text-wambra-cream/70" id="statMesPasado">S/ 0.00</h3>
+                    <p class="text-xs text-wambra-cream/40 mt-2" id="statMesPasadoCount">0 pedidos</p>
+                </div>
+                <!-- Año -->
+                <div class="col-span-2 md:col-span-4 bg-gradient-to-r from-wambra-base to-wambra-dark p-5 rounded-xl border border-wambra-accent/30 shadow-glow relative overflow-hidden flex items-center justify-between">
+                    <div>
+                        <p class="text-wambra-cream/80 text-sm font-bold uppercase tracking-wider mb-1">Total Año Actual</p>
+                        <h3 class="text-4xl font-bold text-white" id="statYear">S/ 0.00</h3>
+                    </div>
+                    <i class="fa-solid fa-sack-dollar text-5xl text-wambra-gold opacity-80"></i>
+                </div>
+            </div>
+
+            <!-- Tabla de Últimos Pedidos -->
+            <div class="bg-wambra-base rounded-xl shadow-2xl border border-wambra-card overflow-hidden">
+                <div class="p-4 border-b border-wambra-card bg-wambra-dark flex justify-between items-center">
+                    <h3 class="font-bold text-lg"><i class="fa-solid fa-list-check text-wambra-accent mr-2"></i> Últimos Pedidos Registrados</h3>
+                    <button onclick="clearSalesHistory()" class="text-xs text-red-400 hover:text-red-300 border border-red-900/50 px-2 py-1 rounded bg-red-900/20 transition-colors">Borrar Todo el Historial</button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-[#150b06] border-b border-wambra-card text-wambra-gold uppercase text-xs">
+                                <th class="p-4">Fecha y Hora</th>
+                                <th class="p-4">Cliente / Info</th>
+                                <th class="p-4">Tipo</th>
+                                <th class="p-4">Total</th>
+                                <th class="p-4 text-center">Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="salesTableBody" class="divide-y divide-wambra-card text-sm">
+                            <!-- JS inyecta filas aquí -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div> <!-- FIN DASHBOARD -->
+
+    <!-- Notificaciones -->
+    <div id="toastContainer" class="fixed bottom-10 left-1/2 transform -translate-x-1/2 z-[300] flex flex-col gap-2"></div>
+
     <script>
-        // --- 1. DATOS REALES DE LA CARTA ---
-        const menuData = [
-            // Especiales
-            { id: 1, name: 'Juane de Pollo', desc: 'Presa entera + ají de cocona + maduros fritos', price: 10.00, category: 'Especiales', img: 'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-            { id: 2, name: 'Salchijuane', desc: 'Juane de pollo + papas fritas + hotdog + ensalada + cremas', price: 12.00, category: 'Especiales', img: 'https://images.unsplash.com/photo-1604908177453-7462950a6a3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-            { id: 3, name: 'Juane y Cecina', desc: 'Presa entera + ají de cocona + maduros fritos + cecina', price: 14.00, category: 'Especiales', img: 'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-            { id: 4, name: 'Pollo a la Plancha', desc: 'Presa entera + ají de cocona + maduros fritos + cecina', price: 20.00, category: 'Especiales', img: 'https://images.unsplash.com/photo-1598514982205-f36b96d1e8d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-            { id: 5, name: 'Tacacho y Cecina', desc: 'Clásico tacacho amazónico acompañado de sabrosa cecina', price: 12.00, category: 'Especiales', img: 'https://images.unsplash.com/photo-1512058564366-18510be2db19?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-            { id: 6, name: 'Juane, Tacacho y Cecina', desc: 'El trío perfecto. Máximo sabor de la selva', price: 16.00, category: 'Especiales', img: 'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-            { id: 7, name: 'Lomo Saltado', desc: 'Tradicional saltado al wok', price: 16.00, category: 'Especiales', img: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-            
-            // Saladitos & Broaster
-            { id: 8, name: 'Broaster - Alitas', desc: 'Pollo broaster, papas fritas, ensalada y cremas', price: 10.00, category: 'Saladitos', img: 'https://images.unsplash.com/photo-1569058242253-1df34b0849af?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-            { id: 9, name: 'Broaster - 1/8', desc: 'Pollo broaster, papas fritas, ensalada y cremas', price: 12.00, category: 'Saladitos', img: 'https://images.unsplash.com/photo-1569058242253-1df34b0849af?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-            { id: 10, name: 'Broaster - 1/4', desc: 'Pollo broaster, papas fritas, ensalada y cremas', price: 18.00, category: 'Saladitos', img: 'https://images.unsplash.com/photo-1569058242253-1df34b0849af?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-            { id: 11, name: 'Monstrito - Alitas', desc: 'Pollo broaster, chaufa, papas fritas, ensalada y cremas', price: 12.00, category: 'Saladitos', img: 'https://images.unsplash.com/photo-1604908177453-7462950a6a3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-            { id: 12, name: 'Monstrito - 1/8', desc: 'Pollo broaster, chaufa, papas fritas, ensalada y cremas', price: 16.00, category: 'Saladitos', img: 'https://images.unsplash.com/photo-1604908177453-7462950a6a3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-            { id: 13, name: 'Monstrito - 1/4', desc: 'Pollo broaster, chaufa, papas fritas, ensalada y cremas', price: 20.00, category: 'Saladitos', img: 'https://images.unsplash.com/photo-1604908177453-7462950a6a3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-            
-            // Chaufas y Salchipapas
-            { id: 14, name: 'Salchipapa Especial', desc: 'Papas fritas con variedad de cortes y cremas', price: 10.00, category: 'Chaufas y Salchipapas', img: 'https://images.unsplash.com/photo-1633436374961-09b92742047b?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-            { id: 15, name: 'Salchipapa Nativa', desc: 'Con papas nativas crocantes', price: 12.00, category: 'Chaufas y Salchipapas', img: 'https://images.unsplash.com/photo-1633436374961-09b92742047b?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-            { id: 16, name: 'Choripapa', desc: 'Papas fritas cubiertas de rodajas de chorizo jugoso', price: 12.00, category: 'Chaufas y Salchipapas', img: 'https://images.unsplash.com/photo-1633436374961-09b92742047b?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-            { id: 17, name: 'Chaufa de Pollo', desc: 'Arroz frito al wok con pollo y cebolla china', price: 12.00, category: 'Chaufas y Salchipapas', img: 'https://images.unsplash.com/photo-1512058564366-18510be2db19?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-            { id: 18, name: 'Chaufa Especial Amazónico', desc: 'Cecina, chorizo regional, maduros fritos', price: 20.00, category: 'Chaufas y Salchipapas', img: 'https://images.unsplash.com/photo-1512058564366-18510be2db19?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
+        // ====================================================================
+        // ⚙️ CONFIGURACIÓN DEL SISTEMA
+        // ====================================================================
+        const WHATSAPP_NUMBER = "51951145538"; 
+        const GOOGLE_API_URL = "https://script.google.com/macros/s/AKfycbwYRhUfbJFpM0oYg7QMzOqo2l6MHtxiE2pPdi1bIGn79HOXZo34W_i8AZZfCvOyR5xP/exec";
+        const DASHBOARD_PIN = "1234";
 
-            // Alitas
-            { id: 19, name: 'Alitas Broaster (8 Piezas)', desc: 'Con papas andinas o tradicionales', price: 16.00, category: 'Alitas', img: 'https://images.unsplash.com/photo-1527477396000-e27163b481c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-            { id: 20, name: 'Alitas Broaster (12 Piezas)', desc: 'Con papas andinas o tradicionales', price: 23.00, category: 'Alitas', img: 'https://images.unsplash.com/photo-1527477396000-e27163b481c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-            { id: 21, name: 'Alitas BBQ (6 Piezas)', desc: 'Bañadas en salsa BBQ clásica, con papas andinas', price: 17.00, category: 'Alitas', img: 'https://images.unsplash.com/photo-1527477396000-e27163b481c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-            { id: 22, name: 'Alitas BBQ (10 Piezas)', desc: 'Bañadas en salsa BBQ clásica, con papas andinas', price: 22.00, category: 'Alitas', img: 'https://images.unsplash.com/photo-1527477396000-e27163b481c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-            { id: 23, name: 'Alitas BBQ Picantes (6 Piezas)', desc: 'Para los valientes, con nuestro toque especial', price: 17.00, category: 'Alitas', img: 'https://images.unsplash.com/photo-1527477396000-e27163b481c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-            { id: 24, name: 'Alitas Acevichadas (6 Piezas)', desc: 'Con nuestra irresistible salsa acevichada', price: 17.00, category: 'Alitas', img: 'https://images.unsplash.com/photo-1527477396000-e27163b481c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-            { id: 25, name: 'Alitas Acevichadas (10 Piezas)', desc: 'Con nuestra irresistible salsa acevichada', price: 22.00, category: 'Alitas', img: 'https://images.unsplash.com/photo-1527477396000-e27163b481c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80' },
-        ];
-
-        // --- 2. VARIABLES DE ESTADO Y CONFIG ---
+        let menuData = [];
         let cart = JSON.parse(localStorage.getItem('wambra_cart')) || [];
-        const WHATSAPP_NUMBER = "51999999999"; 
+        let salesHistory = JSON.parse(localStorage.getItem('wambra_sales_history')) || [];
 
-        // --- 3. INICIALIZACIÓN ---
+        // Iniciar al cargar la página
         document.addEventListener('DOMContentLoaded', () => {
-            renderMenu(menuData);
+            fetchMenuFromAPI();
             updateCartUI();
-            setupFilters();
-            setupSearch();
-            setupMobileMenu();
-            setupNavbarScroll();
+            injectDummyDataIfEmpty(); // Agrega datos falsos solo si el historial está vacío (Para el Demo)
         });
 
-        // --- 4. RENDERIZAR CARTA ---
-        function renderMenu(items) {
-            const container = document.getElementById('menuGrid');
-            const noResults = document.getElementById('noResults');
+        // ====================================================================
+        // 1. OBTENER DATOS (FRONT-END)
+        // ====================================================================
+        async function fetchMenuFromAPI() {
+            try {
+                const response = await fetch(GOOGLE_API_URL, { redirect: "follow" });
+                if (!response.ok) throw new Error("Error HTTP: " + response.status);
+                const text = await response.text();
+                if (text.trim().startsWith('<')) throw new Error("ERROR_PERMISOS");
+                
+                const data = JSON.parse(text);
+                if (data.error) throw new Error(data.error);
+
+                menuData = data;
+                renderizarMenu();
+
+            } catch (error) {
+                console.error("Error al obtener datos:", error);
+                let mensajeError = "No se pudo cargar el menú.";
+                let solucionError = "Asegúrate de que publicaste el Google Script correctamente.";
+                
+                if (error.message === "ERROR_PERMISOS") {
+                    mensajeError = "Error de Permisos en Google 🔒";
+                    solucionError = "Tu Google Apps Script está privado. Debes publicarlo configurando 'Quién tiene acceso' a <b>'Cualquier persona'</b>.";
+                }
+
+                document.getElementById('loader').innerHTML = `
+                    <i class="fa-solid fa-circle-exclamation text-red-500 text-5xl mb-4"></i>
+                    <p class="font-bold text-lg text-wambra-cream">${mensajeError}</p>
+                    <p class="text-sm text-wambra-cream/50 mt-2">${solucionError}</p>
+                `;
+            }
+        }
+
+        function renderizarMenu() {
+            const grid = document.getElementById('menuGrid');
+            const filters = document.getElementById('categoryFilters');
+            grid.innerHTML = '';
             
-            container.innerHTML = '';
-            
-            if (items.length === 0) {
-                noResults.classList.remove('hidden');
+            if (menuData.length === 0) {
+                grid.innerHTML = `<p class="col-span-full text-center text-wambra-cream/50 py-10">La carta está vacía.</p>`;
                 return;
             }
-            noResults.classList.add('hidden');
 
-            items.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'bg-wambra-card rounded-xl overflow-hidden shadow-lg border border-transparent hover:border-wambra-accent/50 transition-all duration-300 flex flex-col group';
-                card.innerHTML = `
-                    <div class="h-48 overflow-hidden relative">
-                        <img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" onerror="this.src='https://via.placeholder.com/300x200/314c40/f2ecdf?text=Wambra'">
-                        <div class="absolute top-3 right-3 bg-wambra-dark/80 backdrop-blur text-wambra-cream text-xs px-2 py-1 rounded border border-wambra-card">${item.category}</div>
-                    </div>
-                    <div class="p-5 flex flex-col flex-1">
-                        <h3 class="font-bold text-lg mb-1 font-serif text-wambra-cream group-hover:text-wambra-accent transition-colors">${item.name}</h3>
-                        <p class="text-xs text-wambra-cream/60 mb-4 flex-1">${item.desc}</p>
-                        <div class="flex justify-between items-center mt-auto">
-                            <span class="font-bold text-wambra-accent text-lg">S/ ${item.price.toFixed(2)}</span>
-                            <div class="flex gap-2">
-                                <button onclick="addToCart(${item.id})" class="w-10 h-10 bg-wambra-accent text-white rounded-full flex items-center justify-center hover:bg-orange-600 shadow-glow transition-transform hover:scale-110" title="Agregar al pedido">
+            const categories = ['Todos', ...new Set(menuData.map(item => item.category))];
+            filters.innerHTML = categories.map((cat, i) => `
+                <button onclick="filtrarPlatos('${cat}')" class="filter-btn ${i===0 ? 'bg-wambra-accent text-white active' : 'bg-wambra-base text-wambra-cream'} px-5 py-2 rounded-full border border-wambra-card hover:border-wambra-accent text-sm" data-filter="${cat}">
+                    ${cat}
+                </button>
+            `).join('');
+
+            menuData.forEach(item => {
+                grid.innerHTML += `
+                    <div class="bg-wambra-card rounded-xl overflow-hidden shadow-lg border border-transparent hover:border-wambra-accent/50 transition-all flex flex-col menu-item" data-category="${item.category}">
+                        <div class="h-48 relative">
+                            <img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/300?text=Plato'">
+                            <span class="absolute top-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">${item.category}</span>
+                        </div>
+                        <div class="p-5 flex flex-col flex-1">
+                            <h3 class="font-bold text-lg text-wambra-cream mb-1">${item.name}</h3>
+                            <p class="text-xs text-wambra-cream/60 mb-4 flex-1">${item.desc}</p>
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-wambra-gold text-lg">S/ ${item.price.toFixed(2)}</span>
+                                <button onclick="addToCart('${item.id}')" class="w-10 h-10 bg-wambra-accent text-white rounded-full flex items-center justify-center hover:bg-red-700">
                                     <i class="fa-solid fa-plus"></i>
-                                </button>
-                                <button onclick="directWhatsAppOrder('${item.name}', ${item.price})" class="w-10 h-10 bg-green-600 text-white rounded-full flex items-center justify-center hover:bg-green-700 transition-transform hover:scale-110" title="Pedir directo">
-                                    <i class="fa-brands fa-whatsapp"></i>
                                 </button>
                             </div>
                         </div>
                     </div>
                 `;
-                container.appendChild(card);
             });
         }
 
-        // --- 5. FILTROS Y BUSCADOR ---
-        function setupFilters() {
-            const buttons = document.querySelectorAll('.filter-btn');
-            buttons.forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    // Estilos activo/inactivo
-                    buttons.forEach(b => {
-                        b.classList.remove('bg-wambra-accent', 'text-white', 'active');
-                        b.classList.add('bg-wambra-dark', 'text-wambra-cream/80');
-                    });
-                    e.target.classList.remove('bg-wambra-dark', 'text-wambra-cream/80');
-                    e.target.classList.add('bg-wambra-accent', 'text-white', 'active');
-
-                    // Filtrar
-                    const filter = e.target.getAttribute('data-filter');
-                    document.getElementById('searchInput').value = ''; // limpiar búsqueda
-                    if (filter === 'all') {
-                        renderMenu(menuData);
-                    } else {
-                        const filtered = menuData.filter(item => item.category === filter);
-                        renderMenu(filtered);
-                    }
-                });
+        function filtrarPlatos(categoria) {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.toggle('bg-wambra-accent', btn.dataset.filter === categoria);
+                btn.classList.toggle('text-white', btn.dataset.filter === categoria);
+                btn.classList.toggle('bg-wambra-base', btn.dataset.filter !== categoria);
+            });
+            document.querySelectorAll('.menu-item').forEach(card => {
+                card.style.display = (categoria === 'Todos' || card.dataset.category === categoria) ? 'flex' : 'none';
             });
         }
 
-        function setupSearch() {
-            const input = document.getElementById('searchInput');
-            input.addEventListener('input', (e) => {
-                const term = e.target.value.toLowerCase();
-                // Reiniciar botones
-                document.querySelectorAll('.filter-btn').forEach(b => {
-                    b.classList.remove('bg-wambra-accent', 'text-white', 'active');
-                    b.classList.add('bg-wambra-dark', 'text-wambra-cream/80');
-                });
-                document.querySelector('[data-filter="all"]').classList.add('bg-wambra-accent', 'text-white', 'active');
-
-                const filtered = menuData.filter(item => 
-                    item.name.toLowerCase().includes(term) || 
-                    item.desc.toLowerCase().includes(term)
-                );
-                renderMenu(filtered);
-            });
-        }
-
-        // --- 6. LÓGICA DEL CARRITO ---
-        function addToCart(productId) {
-            const product = menuData.find(p => p.id === productId);
-            if (!product) return;
-
-            const existing = cart.find(item => item.id === productId);
-            if (existing) {
-                existing.quantity += 1;
-            } else {
-                cart.push({ ...product, quantity: 1 });
-            }
+        // ====================================================================
+        // 2. CARRITO Y ENVÍO DE PEDIDO (REGISTRA VENTA)
+        // ====================================================================
+        function addToCart(id) {
+            const product = menuData.find(p => p.id === id);
+            const existing = cart.find(i => i.id === id);
+            if (existing) existing.quantity++;
+            else cart.push({ ...product, quantity: 1 });
             
-            saveCart();
+            localStorage.setItem('wambra_cart', JSON.stringify(cart));
             updateCartUI();
             showToast(`Agregado: ${product.name}`);
-        }
-
-        function addToCartByData(name, price, category) {
-            // ID virtual para promos o extras
-            const pId = 'promo_' + name.replace(/\s/g, '');
-            const existing = cart.find(item => item.id === pId);
-            
-            if (existing) {
-                existing.quantity += 1;
-            } else {
-                cart.push({ id: pId, name: name, price: price, quantity: 1, isPromo: true, category: category });
-            }
-            saveCart();
-            updateCartUI();
-            showToast(`Agregado: ${name}`);
-        }
-
-        function changeQuantity(id, delta) {
-            const item = cart.find(i => i.id === id);
-            if (item) {
-                item.quantity += delta;
-                if (item.quantity <= 0) {
-                    cart = cart.filter(i => i.id !== id);
-                }
-                saveCart();
-                updateCartUI();
-            }
-        }
-
-        function removeFromCart(id) {
-            cart = cart.filter(i => i.id !== id);
-            saveCart();
-            updateCartUI();
-        }
-
-        function clearCart() {
-            cart = [];
-            document.getElementById('inputDescuento').value = 0;
-            document.getElementById('inputPropina').value = 0;
-            saveCart();
-            updateCartUI();
-        }
-
-        function saveCart() {
-            localStorage.setItem('wambra_cart', JSON.stringify(cart));
+            const badge = document.getElementById('cart-badge').parentElement;
+            badge.classList.remove('cart-shake'); void badge.offsetWidth; badge.classList.add('cart-shake');
         }
 
         function updateCartUI() {
             const container = document.getElementById('cartItems');
-            const badges = [document.getElementById('cart-badge'), document.getElementById('floating-badge')];
-            
-            // Actualizar Badges
             const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            badges.forEach(badge => {
-                if (badge) {
-                    if (totalItems > 0) {
-                        badge.textContent = totalItems;
-                        badge.classList.remove('hidden');
-                    } else {
-                        badge.classList.add('hidden');
-                    }
-                }
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            ['cart-badge', 'floating-badge'].forEach(id => {
+                document.getElementById(id).textContent = totalItems;
+                document.getElementById(id).classList.toggle('hidden', totalItems === 0);
             });
 
-            // Renderizar Items
             if (cart.length === 0) {
-                container.innerHTML = `
-                    <div class="flex flex-col items-center justify-center h-full text-wambra-cream/30 pt-10">
-                        <i class="fa-solid fa-basket-shopping text-5xl mb-3"></i>
-                        <p>Tu canasta está vacía</p>
-                    </div>`;
-                updateTotals();
-                return;
-            }
-
-            container.innerHTML = '';
-            cart.forEach(item => {
-                const sub = item.price * item.quantity;
-                container.innerHTML += `
-                    <div class="flex items-center gap-3 bg-wambra-dark p-3 rounded-lg border border-wambra-card">
+                container.innerHTML = `<div class="text-center py-10 text-wambra-cream/40"><i class="fa-solid fa-basket-shopping text-4xl mb-3"></i><p>Tu canasta está vacía</p></div>`;
+            } else {
+                container.innerHTML = cart.map(item => `
+                    <div class="flex items-center gap-2 bg-wambra-dark p-3 rounded border border-wambra-card">
                         <div class="flex-1">
-                            <h4 class="font-bold text-sm text-wambra-cream leading-tight ${item.isPromo ? 'text-wambra-accent' : ''}">
-                                ${item.isPromo ? '<i class="fa-solid fa-star text-xs mr-1"></i>' : ''}${item.name}
-                            </h4>
+                            <h4 class="font-bold text-sm">${item.name}</h4>
                             <div class="text-wambra-gold text-sm font-bold">S/ ${item.price.toFixed(2)}</div>
                         </div>
-                        <div class="flex items-center bg-wambra-base rounded border border-wambra-card">
-                            <button onclick="changeQuantity('${item.id}', -1)" class="w-7 h-7 text-wambra-cream/70 hover:text-white flex items-center justify-center">-</button>
-                            <span class="w-6 text-center text-sm font-bold">${item.quantity}</span>
-                            <button onclick="changeQuantity('${item.id}', 1)" class="w-7 h-7 text-wambra-cream/70 hover:text-white flex items-center justify-center">+</button>
+                        <div class="flex bg-wambra-base rounded">
+                            <button onclick="modificarCantidad('${item.id}', -1)" class="w-8 h-8 hover:bg-wambra-card">-</button>
+                            <span class="w-6 text-center leading-8 text-sm">${item.quantity}</span>
+                            <button onclick="modificarCantidad('${item.id}', 1)" class="w-8 h-8 hover:bg-wambra-card">+</button>
                         </div>
-                        <button onclick="removeFromCart('${item.id}')" class="text-wambra-cream/30 hover:text-wambra-accent transition-colors pl-2">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
                     </div>
-                `;
-            });
-            updateTotals();
+                `).join('');
+            }
+            document.getElementById('cartTotal').textContent = `S/ ${subtotal.toFixed(2)}`;
         }
 
-        function updateTotals() {
-            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const desc = parseFloat(document.getElementById('inputDescuento').value) || 0;
-            const prop = parseFloat(document.getElementById('inputPropina').value) || 0;
-            
-            const total = subtotal - desc + prop;
-
-            document.getElementById('cartSubtotal').textContent = `S/ ${subtotal.toFixed(2)}`;
-            // Prevenir negativos
-            document.getElementById('cartTotal').textContent = `S/ ${Math.max(0, total).toFixed(2)}`;
+        function modificarCantidad(id, delta) {
+            const item = cart.find(i => i.id === id);
+            item.quantity += delta;
+            if (item.quantity <= 0) cart = cart.filter(i => i.id !== id);
+            localStorage.setItem('wambra_cart', JSON.stringify(cart));
+            updateCartUI();
         }
 
-        // --- 7. INTEGRACIÓN WHATSAPP ---
+        function clearCart() {
+            cart = []; localStorage.setItem('wambra_cart', '[]');
+            document.getElementById('checkoutForm').classList.add('hidden');
+            document.getElementById('btnContinuar').classList.remove('hidden');
+            document.getElementById('btnEnviarWhatsApp').classList.add('hidden');
+            updateCartUI();
+        }
+
+        function showCheckout() {
+            if (cart.length === 0) return showToast("Canasta vacía", "error");
+            document.getElementById('checkoutForm').classList.remove('hidden');
+            document.getElementById('btnContinuar').classList.add('hidden');
+            document.getElementById('btnEnviarWhatsApp').classList.remove('hidden');
+        }
+
         function sendOrderWhatsApp() {
-            if (cart.length === 0) {
-                showToast("Agrega productos antes de pedir.", "error");
-                return;
-            }
+            const nom = document.getElementById('clienteNombre').value.trim();
+            const tipo = document.getElementById('tipoEntrega').value;
+            const dir = document.getElementById('clienteDireccion').value.trim();
 
-            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const desc = parseFloat(document.getElementById('inputDescuento').value) || 0;
-            const prop = parseFloat(document.getElementById('inputPropina').value) || 0;
-            const total = subtotal - desc + prop;
+            if (!nom) return showToast("Ingresa tu nombre", "error");
+            if (tipo === 'delivery' && !dir) return showToast("Ingresa tu dirección", "error");
 
-            let text = `🔥 *Hola WAMBRA Rinconcito, quiero realizar el siguiente pedido:* 🔥\n\n`;
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             
-            cart.forEach(item => {
-                const itemTotal = item.price * item.quantity;
-                text += `🔸 ${item.quantity}x ${item.name} - S/ ${itemTotal.toFixed(2)}\n`;
-            });
+            // --- AQUÍ REGISTRAMOS LA VENTA PARA EL DASHBOARD ---
+            registrarVenta(nom, tipo, total);
+            // ---------------------------------------------------
 
-            text += `\n*Subtotal:* S/ ${subtotal.toFixed(2)}`;
-            if (desc > 0) text += `\n*Descuento:* - S/ ${desc.toFixed(2)}`;
-            if (prop > 0) text += `\n*Propina:* + S/ ${prop.toFixed(2)}`;
-            text += `\n\n💰 *TOTAL A PAGAR: S/ ${Math.max(0, total).toFixed(2)}*`;
-            text += `\n\n_Por favor confirmar tiempo de envío y medios de pago._`;
+            let msj = `🔥 *PEDIDO WAMBRA* 🔥\n\n👤 *De:* ${nom}\n🛵 *Tipo:* ${tipo === 'delivery' ? 'Delivery' : 'Recojo en local'}\n`;
+            if (tipo === 'delivery') msj += `📍 *Dir:* ${dir}\n`;
+            
+            msj += `\n🛒 *PEDIDO:*\n` + cart.map(i => `🔸 ${i.quantity}x ${i.name} (S/${(i.price*i.quantity).toFixed(2)})`).join('\n');
+            msj += `\n\n💰 *TOTAL: S/ ${total.toFixed(2)}*`;
 
-            const encoded = encodeURIComponent(text);
-            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encoded}`, '_blank');
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msj)}`, '_blank');
+            
+            // Limpiar carrito después de pedir
+            setTimeout(() => { clearCart(); toggleCart(); }, 1000);
         }
 
-        function directWhatsAppOrder(name, price) {
-            let text = `🔥 *Hola WAMBRA Rinconcito, deseo pedir:* 🔥\n\n`;
-            text += `🔸 1x ${name} - S/ ${price.toFixed(2)}\n\n`;
-            text += `_Por favor confirmar._`;
-            
-            const encoded = encodeURIComponent(text);
-            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encoded}`, '_blank');
-        }
-
-        // --- 8. UTILIDADES UI ---
         function toggleCart() {
-            const sidebar = document.getElementById('cartSidebar');
-            const overlay = document.getElementById('cartOverlay');
-            
-            if (sidebar.classList.contains('translate-x-full')) {
-                sidebar.classList.remove('translate-x-full');
-                overlay.classList.remove('hidden');
-                document.body.style.overflow = 'hidden'; // Prevenir scroll fondo
-            } else {
-                sidebar.classList.add('translate-x-full');
-                overlay.classList.add('hidden');
-                document.body.style.overflow = '';
+            document.getElementById('cartSidebar').classList.toggle('translate-x-full');
+            document.getElementById('cartOverlay').classList.toggle('hidden');
+        }
+
+        function showToast(msg, type="success") {
+            const cont = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast-enter ${type==='error'?'bg-red-800':'bg-wambra-card'} text-white px-6 py-3 rounded-full shadow-glow`;
+            toast.innerHTML = `<i class="fa-solid ${type==='error'?'fa-circle-exclamation':'fa-check-circle'} mr-2"></i>${msg}`;
+            cont.appendChild(toast);
+            setTimeout(() => { toast.style.opacity=0; setTimeout(()=>toast.remove(), 300); }, 3000);
+        }
+
+        // ====================================================================
+        // 3. DASHBOARD Y ESTADÍSTICAS (BACK-END LOCAL)
+        // ====================================================================
+        
+        function injectDummyDataIfEmpty() {
+            if (salesHistory.length === 0) {
+                const now = new Date();
+                const randomVentas = [];
+                for(let i=0; i<45; i++) {
+                    let date = new Date();
+                    date.setDate(now.getDate() - Math.floor(Math.random() * 40));
+                    randomVentas.push({
+                        id: Date.now() - (i*10000),
+                        fechaIso: date.toISOString(),
+                        cliente: "Cliente Web " + (i+1),
+                        tipo: Math.random() > 0.5 ? 'delivery' : 'recojo',
+                        total: Math.floor(Math.random() * 60) + 20 
+                    });
+                }
+                randomVentas.push({ id: Date.now(), fechaIso: now.toISOString(), cliente: "Mesa 4 (Local)", tipo: 'en local', total: 45.00 });
+                randomVentas.push({ id: Date.now()+1, fechaIso: now.toISOString(), cliente: "Lucía R.", tipo: 'recojo', total: 28.00 });
+                
+                salesHistory = randomVentas;
+                localStorage.setItem('wambra_sales_history', JSON.stringify(salesHistory));
             }
         }
 
-        function showToast(message, type = "success") {
-            const container = document.getElementById('toastContainer');
-            const toast = document.createElement('div');
-            
-            const bgColor = type === "error" ? "bg-red-800" : "bg-wambra-card";
-            const icon = type === "error" ? "fa-circle-exclamation text-red-500" : "fa-circle-check text-green-500";
-            
-            toast.className = `toast-enter ${bgColor} border border-wambra-base text-white px-6 py-3 rounded-full shadow-glow flex items-center gap-3`;
-            toast.innerHTML = `<i class="fa-solid ${icon}"></i> <span class="text-sm font-medium">${message}</span>`;
-            
-            container.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                toast.style.transform = 'translateY(100%)';
-                toast.style.transition = 'all 0.3s ease';
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
+        function registrarVenta(cliente, tipo, total) {
+            const nuevaVenta = {
+                id: Date.now(),
+                fechaIso: new Date().toISOString(),
+                cliente: cliente,
+                tipo: tipo,
+                total: total
+            };
+            salesHistory.push(nuevaVenta);
+            localStorage.setItem('wambra_sales_history', JSON.stringify(salesHistory));
         }
 
-        function setupMobileMenu() {
-            const btn = document.getElementById('mobile-menu-btn');
-            const menu = document.getElementById('mobile-menu');
-            const links = document.querySelectorAll('.mobile-link');
-
-            btn.addEventListener('click', () => {
-                menu.classList.toggle('hidden');
-            });
-
-            links.forEach(link => {
-                link.addEventListener('click', () => {
-                    menu.classList.add('hidden');
-                });
-            });
+        // --- NUEVO: FUNCIONES PARA ELIMINAR Y AGREGAR MANUALMENTE ---
+        function deleteSale(id) {
+            if(confirm("¿Estás seguro de eliminar esta venta del registro?")) {
+                salesHistory = salesHistory.filter(s => s.id !== id);
+                localStorage.setItem('wambra_sales_history', JSON.stringify(salesHistory));
+                calcularEstadisticas();
+                showToast("Venta eliminada del registro");
+            }
         }
 
-        function setupNavbarScroll() {
-            const nav = document.getElementById('navbar');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    nav.classList.add('shadow-lg', 'bg-wambra-dark');
-                    nav.classList.remove('bg-wambra-dark/95', 'py-4');
-                    nav.classList.add('py-2');
-                } else {
-                    nav.classList.remove('shadow-lg', 'bg-wambra-dark', 'py-2');
-                    nav.classList.add('bg-wambra-dark/95', 'py-4');
-                }
+        function openManualSaleModal() { document.getElementById('manualSaleModal').classList.remove('hidden'); }
+        
+        function closeManualSaleModal() { 
+            document.getElementById('manualSaleModal').classList.add('hidden'); 
+            document.getElementById('manualCliente').value = '';
+            document.getElementById('manualTotal').value = '';
+        }
+
+        function saveManualSale() {
+            const cliente = document.getElementById('manualCliente').value.trim() || 'Cliente Local / Mesa';
+            const tipo = document.getElementById('manualTipo').value;
+            const total = parseFloat(document.getElementById('manualTotal').value);
+
+            if(isNaN(total) || total <= 0) {
+                return showToast("Ingresa un monto total válido", "error");
+            }
+
+            registrarVenta(cliente, tipo, total);
+            closeManualSaleModal();
+            calcularEstadisticas(); // Recargar el dashboard
+            showToast("Venta manual registrada exitosamente");
+        }
+
+        function clearSalesHistory() {
+            if(confirm("¿Seguro de borrar TODAS las estadísticas? Esto dejará tus ventas en 0.")){
+                salesHistory = [];
+                localStorage.setItem('wambra_sales_history', '[]');
+                calcularEstadisticas();
+            }
+        }
+
+        // --- MANEJO DEL LOGIN DEL DASHBOARD ---
+        function openDashboardLogin() { document.getElementById('dashLoginModal').classList.remove('hidden'); }
+        function closeDashboardLogin() { document.getElementById('dashLoginModal').classList.add('hidden'); document.getElementById('adminPin').value = ''; }
+        
+        function tryLoginDashboard() {
+            const pin = document.getElementById('adminPin').value;
+            if (pin === DASHBOARD_PIN) {
+                closeDashboardLogin();
+                document.getElementById('clientView').style.display = 'none';
+                document.getElementById('dashboardView').classList.remove('hidden');
+                calcularEstadisticas(); 
+                showToast("Bienvenido al Dashboard");
+            } else {
+                showToast("PIN Incorrecto", "error");
+            }
+        }
+
+        function logoutDashboard() {
+            document.getElementById('dashboardView').classList.add('hidden');
+            document.getElementById('clientView').style.display = 'block';
+        }
+
+        // --- CÁLCULO MATEMÁTICO DE ESTADÍSTICAS ---
+        function calcularEstadisticas() {
+            const hoy = new Date();
+            const startOfHoy = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
+            
+            const startOfAyer = new Date(startOfHoy); startOfAyer.setDate(startOfAyer.getDate() - 1);
+            const endOfAyer = new Date(startOfHoy);
+            
+            const startOfMes = new Date(hoy.getFullYear(), hoy.getMonth(), 1);
+            const startOfMesPasado = new Date(hoy.getFullYear(), hoy.getMonth() - 1, 1);
+            const startOfYear = new Date(hoy.getFullYear(), 0, 1);
+
+            let sumaHoy = 0, countHoy = 0;
+            let sumaAyer = 0, countAyer = 0;
+            let sumaMes = 0, countMes = 0;
+            let sumaMesPasado = 0, countMesPasado = 0;
+            let sumaYear = 0;
+
+            const sortedSales = [...salesHistory].sort((a,b) => new Date(b.fechaIso) - new Date(a.fechaIso));
+
+            sortedSales.forEach(venta => {
+                const date = new Date(venta.fechaIso);
+                const t = venta.total;
+
+                if (date >= startOfYear) sumaYear += t;
+                if (date >= startOfMesPasado && date < startOfMes) { sumaMesPasado += t; countMesPasado++; }
+                if (date >= startOfMes) { sumaMes += t; countMes++; }
+                if (date >= startOfAyer && date < endOfAyer) { sumaAyer += t; countAyer++; }
+                if (date >= startOfHoy) { sumaHoy += t; countHoy++; }
             });
+
+            document.getElementById('statHoy').innerText = `S/ ${sumaHoy.toFixed(2)}`;
+            document.getElementById('statHoyCount').innerText = `${countHoy} pedidos`;
+            
+            document.getElementById('statAyer').innerText = `S/ ${sumaAyer.toFixed(2)}`;
+            document.getElementById('statAyerCount').innerText = `${countAyer} pedidos`;
+            
+            document.getElementById('statMes').innerText = `S/ ${sumaMes.toFixed(2)}`;
+            document.getElementById('statMesCount').innerText = `${countMes} pedidos`;
+            
+            document.getElementById('statMesPasado').innerText = `S/ ${sumaMesPasado.toFixed(2)}`;
+            document.getElementById('statMesPasadoCount').innerText = `${countMesPasado} pedidos`;
+            
+            document.getElementById('statYear').innerText = `S/ ${sumaYear.toFixed(2)}`;
+
+            const tbody = document.getElementById('salesTableBody');
+            if(sortedSales.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-wambra-cream/40">No hay ventas registradas aún.</td></tr>`;
+            } else {
+                tbody.innerHTML = sortedSales.map(v => {
+                    const d = new Date(v.fechaIso);
+                    const fechaStr = `${d.getDate()}/${d.getMonth()+1} - ${d.getHours()}:${d.getMinutes().toString().padStart(2,'0')}`;
+                    return `
+                        <tr class="hover:bg-wambra-base/50 transition-colors">
+                            <td class="p-4 text-wambra-cream/70">${fechaStr}</td>
+                            <td class="p-4 font-bold text-wambra-cream">${v.cliente}</td>
+                            <td class="p-4">
+                                <span class="bg-wambra-card px-2 py-1 rounded text-[10px] uppercase ${v.tipo==='en local'?'text-green-400':''}">${v.tipo}</span>
+                            </td>
+                            <td class="p-4 text-wambra-gold font-bold">S/ ${v.total.toFixed(2)}</td>
+                            <td class="p-4 text-center">
+                                <button onclick="deleteSale(${v.id})" class="text-wambra-cream/30 hover:text-red-500 transition-colors" title="Eliminar Venta">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            }
         }
     </script>
 </body>
