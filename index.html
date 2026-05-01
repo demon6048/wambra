@@ -154,6 +154,21 @@
             <i class="fa-solid fa-cart-shopping"></i>
             <span id="floating-badge" class="absolute -top-1 -right-1 bg-white text-wambra-accent text-xs font-bold h-5 w-5 rounded-full flex items-center justify-center shadow hidden">0</span>
         </button>
+
+        <!-- NUEVO: Plato Bandera del Día (Recomendación Flotante) -->
+        <div id="platoBandera" class="fixed bottom-24 md:bottom-6 left-4 md:left-6 z-40 w-72 bg-wambra-base border border-wambra-gold/50 rounded-xl shadow-2xl transform -translate-x-[150%] transition-transform duration-700 flex flex-col overflow-hidden">
+            <button onclick="cerrarPlatoBandera()" class="absolute top-2 right-2 text-white bg-black/50 rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-wambra-accent z-10 transition-colors"><i class="fa-solid fa-xmark"></i></button>
+            <div class="bg-wambra-accent text-white text-xs font-bold text-center py-1 uppercase tracking-widest"><i class="fa-solid fa-star text-wambra-gold mr-1"></i> Recomendación del Día</div>
+            <div class="flex h-24">
+                <img id="pb-img" src="" class="w-1/3 object-cover">
+                <div class="w-2/3 p-3 flex flex-col justify-center">
+                    <h4 id="pb-name" class="font-bold text-sm leading-tight text-wambra-cream mb-1 truncate">...</h4>
+                    <span id="pb-price" class="text-wambra-gold text-sm font-bold mb-2">S/ 0.00</span>
+                    <button id="pb-btn" class="bg-wambra-dark hover:bg-wambra-card border border-wambra-accent/50 text-white text-xs py-1 rounded shadow-glow transition-colors">Agregar al Pedido</button>
+                </div>
+            </div>
+        </div>
+
     </div> <!-- FIN FRONT-END -->
 
 
@@ -329,6 +344,9 @@
 
                 menuData = data;
                 renderizarMenu();
+                
+                // Mostrar la recomendación del día una vez que los platos cargan
+                initPlatoBandera();
 
             } catch (error) {
                 console.error("Error al obtener datos:", error);
@@ -347,6 +365,40 @@
                 `;
             }
         }
+
+        // --- NUEVO: LÓGICA DEL PLATO BANDERA FLOTANTE ---
+        function initPlatoBandera() {
+            if (menuData.length === 0) return;
+
+            // Filtramos platos especiales o usamos toda la carta si no hay
+            const especiales = menuData.filter(p => p.category && p.category.toLowerCase().includes('especial'));
+            const opciones = especiales.length > 0 ? especiales : menuData;
+
+            // Elegimos un plato basado en el día de la semana (así no cambia a cada rato en el mismo día)
+            const diaSemana = new Date().getDay(); // 0 a 6
+            const platoDia = opciones[diaSemana % opciones.length];
+
+            // Llenamos la información en la tarjetita
+            document.getElementById('pb-img').src = platoDia.img;
+            document.getElementById('pb-name').innerText = platoDia.name;
+            document.getElementById('pb-price').innerText = `S/ ${platoDia.price.toFixed(2)}`;
+            
+            // Le damos función al botón
+            document.getElementById('pb-btn').onclick = () => {
+                addToCart(platoDia.id);
+                cerrarPlatoBandera();
+            };
+
+            // Animación de aparición (sale 3 segundos después de cargar la web)
+            setTimeout(() => {
+                document.getElementById('platoBandera').classList.remove('-translate-x-[150%]');
+            }, 3000);
+        }
+
+        function cerrarPlatoBandera() {
+            document.getElementById('platoBandera').classList.add('-translate-x-[150%]');
+        }
+        // -------------------------------------------------
 
         function renderizarMenu() {
             const grid = document.getElementById('menuGrid');
